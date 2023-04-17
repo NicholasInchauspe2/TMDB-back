@@ -1,5 +1,15 @@
 import { Document, Schema, Model, model } from "mongoose";
 
+export interface completeMovie{
+    title: string;
+    genresList: Array<string>;
+    overview: string;
+    vote_average: number;
+    adult: boolean;
+    poster_path: string;
+    backdrop_path: string;
+}
+
 interface movieInterface extends Document{
     _id: string;
     title: string;
