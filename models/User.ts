@@ -6,10 +6,24 @@ export interface Payload extends JwtPayload {
     user: SimpleUser
 }
 
+export interface newUser  {
+    name: string;
+    email: string;
+    password: string;
+}
+
 export interface SimpleUser  {
     _id: string;
     name: string;
     email: string;
+}
+
+export interface completeUser{
+    _id: string;
+    name: string;
+    email: string;
+    password: string;
+    salt: string;
 }
 
 
