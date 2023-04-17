@@ -2,6 +2,7 @@ import express, { Application } from "express";
 import cors from "cors";
 import dbConnection from "./db/index";
 import { User, UserInterface } from "./models/User";
+import { Movie } from "./models/Movie";
 import index from "./routes/index";
 
 
