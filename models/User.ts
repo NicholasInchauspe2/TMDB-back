@@ -6,6 +6,11 @@ export interface Payload extends JwtPayload {
     user: SimpleUser
 }
 
+export interface logIn  {
+    email: string;
+    password: string;
+}
+
 export interface newUser  {
     name: string;
     email: string;
@@ -33,6 +38,7 @@ export interface UserInterface extends Document {
     email: string;
     password: string;
     salt: string;
+    validatePassword(password: string): Promise<{ user: boolean }>;
 }
 
 const userSchema : Schema<UserInterface> = new Schema({
@@ -52,10 +58,10 @@ userSchema.pre("save", async function(this: UserInterface, next){
 });
  
 userSchema.methods.validatePassword = async function(this: UserInterface, password: string): Promise<{user: boolean}> {
-   const input = await bcrypt.hash(password, this.salt);
-   return {user: input === this.password};
+   const isValid = await bcrypt.compare(password, this.password);
+   return {user: isValid};
 } 
 
 const User: Model <UserInterface> = model<UserInterface>("User", userSchema);
 
-export { User };
+export { User, userSchema };
