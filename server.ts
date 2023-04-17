@@ -24,13 +24,3 @@ app.listen(port, () => {
 });
 
 
-const createUser = async () => {
- const usuario = await User.create( {
-        name: "Administrador General",
-        email: "admin@example.com",
-        password: "testing",
-      }); 
-      usuario.save();
-}
-
-createUser();
