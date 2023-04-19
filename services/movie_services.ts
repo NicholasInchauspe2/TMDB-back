@@ -54,9 +54,9 @@ export default class movie_services {
     }
 }
 
-static async deleteByTitle(name: string): Promise <{ error: boolean, message: string }>{
+static async deleteAll(name: string): Promise <{ error: boolean, message: string }>{
     try{
-     const DeleteResult : DeleteDocumentResponse = await Movie.deleteOne({"title": name});
+     const DeleteResult : DeleteDocumentResponse = await Movie.deleteMany();
      if(DeleteResult.deletedCount === 0){return{error: true, message:"Failed to find the movie in the database"}};
      return {error: false, message: "Successfully delete selected movie from database"};
     }catch(err){
