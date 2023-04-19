@@ -6,12 +6,12 @@ const router : Router = express.Router();
 
 router.post("/add", addMovie);
 
-router.get("length", getLengthOfMovies);
+router.get("/length", getLengthOfMovies);
 
-router.get("all/:amount/:page");
+router.get("/all/:amount/:page");
 
-router.get("one/:title", getSelectedMovie);
+router.get("/one/:title", getSelectedMovie);
 
-router.delete("one/:title", deleteSelectedMovie);
+router.delete("/one/:title", deleteSelectedMovie);
 
 export default router;

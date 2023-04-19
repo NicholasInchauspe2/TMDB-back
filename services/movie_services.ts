@@ -3,9 +3,9 @@ import { DeleteDocumentResponse } from "../config/interfaces";
 
 
 export default class movie_services {
-    static async createNewMovie(newMovie : completeMovie): Promise <{ error: boolean, message: string}>{
+    static async createNewMovie(newMovie : Array<completeMovie>): Promise <{ error: boolean, message: string}>{
            try{
-            const addedMovie : completeMovie = await Movie.create(newMovie);
+            await Movie.insertMany(newMovie);
             return {error: false, message: "Successfully created a movie in the database"};
            }catch(err){
             if(err instanceof Error){
