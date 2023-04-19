@@ -4,7 +4,7 @@ import { simpleResponse, lengthOfMoviesResponse, getSingleMovie, selectMoviesRes
 import movie_services from "../services/movie_services";
 
 export const addMovie = async(req: Request, res: Response) => {
-    const newMovie : completeMovie = req.body;
+    const newMovie : Array<completeMovie> = req.body;
     try{
         const response : simpleResponse = await movie_services.createNewMovie(newMovie);
         if(!response.error){
