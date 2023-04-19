@@ -59,7 +59,7 @@ export const getSelectedMovie = async(req: Request, res: Response) => {
 export const deleteSelectedMovie = async(req: Request, res: Response) => {
     const name : string = req.params.title;
     try{
-        const response : simpleResponse = await movie_services.deleteByTitle(name);
+        const response : simpleResponse = await movie_services.deleteAll(name);
         if(!response.error){
             return res.status(200).json(response.message);
         }
