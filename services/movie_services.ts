@@ -41,10 +41,12 @@ export default class movie_services {
     }
 }
 
- static async getByTitle(name: string): Promise <{ error: boolean, message: string, data: completeMovie | null}>{
+ static async getLastMovie(): Promise <{ error: boolean, message: string, data: completeMovie | null}>{
     try{
-     const selectedMovie : completeMovie | null = await Movie.findOne({"title": name});
+     const selectedMovie : completeMovie | null = await Movie.findOne().sort({createdAt: -1})
+     console.log(selectedMovie)
      if(selectedMovie === null){return{error: true, message:"Failed to get movie", data: null}};
+   /*   console.log(new Date(selectedMovie.createdAt))  */
      return {error: false, message: "Successfully found selected movie from the database", data: selectedMovie};
     }catch(err){
      if(err instanceof Error){
@@ -54,7 +56,7 @@ export default class movie_services {
     }
 }
 
-static async deleteAll(name: string): Promise <{ error: boolean, message: string }>{
+static async deleteAll(): Promise <{ error: boolean, message: string }>{
     try{
      const DeleteResult : DeleteDocumentResponse = await Movie.deleteMany();
      if(DeleteResult.deletedCount === 0){return{error: true, message:"Failed to find the movie in the database"}};
