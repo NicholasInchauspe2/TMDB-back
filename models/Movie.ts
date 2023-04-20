@@ -17,6 +17,7 @@ interface movieInterface extends Document{
     overview: string;
     vote_average: number;
     adult: boolean;
+    createdAt: number;
     poster_path: string;
     backdrop_path: string;
 }
@@ -24,6 +25,7 @@ interface movieInterface extends Document{
 const movieSchema : Schema<movieInterface> = new Schema({
     title: {type: String, required: true},
 /*     genresList: {type: [String], required: true}, */
+    createdAt: {type: Number, default: Date.now(), required: true},
     overview: {type: String, required: true},
     vote_average: {type: Number, required: true},
     adult: {type: Boolean, required: true},
