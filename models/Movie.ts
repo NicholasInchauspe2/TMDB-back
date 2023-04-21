@@ -1,10 +1,11 @@
 import { Document, Schema, Model, model } from "mongoose";
 
 export interface completeMovie{
+    _id: string;
     title: string;
-/*     genresList: Array<string>; */
     overview: string;
     vote_average: number;
+    createdAt: number;
     adult: boolean;
     poster_path: string;
     backdrop_path: string;
@@ -13,7 +14,6 @@ export interface completeMovie{
 interface movieInterface extends Document{
     _id: string;
     title: string;
-/*     genresList: Array<string>; */
     overview: string;
     vote_average: number;
     adult: boolean;
@@ -24,7 +24,6 @@ interface movieInterface extends Document{
 
 const movieSchema : Schema<movieInterface> = new Schema({
     title: {type: String, required: true},
-/*     genresList: {type: [String], required: true}, */
     createdAt: {type: Number, default: Date.now(), required: true},
     overview: {type: String, required: true},
     vote_average: {type: Number, required: true},

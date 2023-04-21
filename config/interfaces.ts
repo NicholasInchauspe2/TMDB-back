@@ -30,7 +30,6 @@ export interface lengthOfMoviesResponse {
 export interface getSingleMovie {
     error: boolean;
     message: string;
-    data: completeMovie | null;
 }
 
 

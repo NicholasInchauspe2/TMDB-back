@@ -17,12 +17,19 @@ export const addMovie = async(req: Request, res: Response) => {
 }
 
 export const getLengthOfMovies = async(req: Request, res: Response) => {
+    const newMovie : Array<completeMovie> = req.body;
     try{
-        const response : lengthOfMoviesResponse = await movie_services.amountOfMovies();
+        const response : lengthOfMoviesResponse = await movie_services.amountOfMovies(newMovie);
         if(!response.error){
             return res.status(200).json(response);
         }
-        return res.status(400).json(response.message);
+        if(response.error && response.length === -1){
+            const responseOfPopulation : lengthOfMoviesResponse = await movie_services.populateMovie(newMovie)
+            if(!responseOfPopulation.error){
+                return res.status(201).json({message: "Sucessfully populate movie Model"});
+            }
+            return res.status(400).json(response.message);
+        }
     }catch(err){
         return res.status(400).json({message: "Failed to add a new movie"});
     }
@@ -47,7 +54,7 @@ export const lastOne = async(req: Request, res: Response) => {
     try{
         const response : getSingleMovie = await movie_services.getLastMovie();
         if(!response.error){
-            return res.status(200).json(response.data);
+            return res.status(200).json(response.message);
         }
         return res.status(400).json(response.message);
     }catch(err){
