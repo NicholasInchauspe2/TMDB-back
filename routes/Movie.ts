@@ -6,7 +6,7 @@ const router : Router = express.Router();
 
 router.post("/add", addMovie);
 
-router.get("/length", getLengthOfMovies);
+router.post("/length", getLengthOfMovies);
 
 router.get("/all/:amount/:page");
 
