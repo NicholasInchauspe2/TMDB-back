@@ -15,20 +15,19 @@ export default class movie_services {
            }
     }
 
-    static async amountOfMovies(newMovie : Array<completeMovie>): Promise <{ error: boolean, message: string, length: number}>{
+    static async amountOfMovies(populate : Array<completeMovie>): Promise <{ error: boolean, message: string, length: number}>{
         try{
-            console.log("ENTRO EN EL PEPE", newMovie)
+            console.log("ENTRO EN EL PEPE")
          const allMovies = await Movie.find();
-         console.log(allMovies.length)
-         console.log(!allMovies[0])
+         console.log("ENTRO EN EL PEPE", !allMovies[0])
          if(!allMovies[0]){
+            console.log("entra aca")
             return{error: true, message: "No movies to search", length: -1}
          }
-         console.log("allMovies", allMovies.length);
          if(new Date(allMovies[0].createdAt).getDate() !== new Date().getDate()){
              const DeleteResult : DeleteDocumentResponse = await Movie.deleteMany();
             if(DeleteResult.deletedCount === 0){return{error: true, message:"Failed to find the movie in the database",  length: 0}};
-            await Movie.insertMany(newMovie);
+            await Movie.insertMany(populate);
             return {error: false, message: "Successfully inserted movies on the db", length: 0};
         }
          return {error: false, message: "Succesfully check if movies model is working", length: allMovies.length};
@@ -41,14 +40,15 @@ export default class movie_services {
         }
  }
 
- static async populateMovie(newMovie : Array<completeMovie>): Promise <{ error: boolean, message: string, length: number}>{
+ static async populateMovie(populate : Array<completeMovie>): Promise <{ error: boolean, message: string, length: number}>{
     try{
-   const movieCreated = await Movie.insertMany(newMovie);
-            console.log("SE LLENO LA DATABASE", movieCreated.length);
-            return {error: false, message: "Successfully inserted movies on the db", length: movieCreated.length};
+        console.log(populate)
+            await Movie.insertMany(populate);
+            console.log("SE LLENO LA DATABASE");
+            return {error: false, message: "Successfully inserted movies on the db", length: 0};
         }
         catch(err){
-                console.log("entro en el catch")
+                console.log("entro en el catch del populate", err)
              if(err instanceof Error){
                  return {error: true, message: "Could populate database", length: 0};
              }
