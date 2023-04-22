@@ -51,11 +51,12 @@ export default class movie_services {
  }
 
 
- static async foundSelectMovies(amount: number, page: number): Promise <{ error: boolean, message: string, data: Array<completeMovie> | null}>{
+ static async allMovies(): Promise <{ error: boolean, message: string, data: Array<completeMovie> | null}>{
     try{
-     const allMovies : Array<completeMovie> = await Movie.find();
-     const response = allMovies.splice((page - 1) * amount, amount);
-     return {error: false, message: "Successfully get selected movies from the database", data: response};
+        console.log("entra")
+     const allMovies  = await Movie.find();
+     console.log(allMovies)
+     return {error: false, message: "Successfully get selected movies from the database", data: allMovies};
     }catch(err){
      if(err instanceof Error){
          return {error: true, message: err.message, data: null};
