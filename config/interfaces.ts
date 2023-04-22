@@ -36,7 +36,7 @@ export interface getSingleMovie {
 export interface selectMoviesResponse {
     error: boolean;
     message: string;
-    data: Array<completeMovie> | null;
+    data: Record<string, completeMovie[]> | null;
 }
 
 export interface DeleteDocumentResponse {
