@@ -51,12 +51,18 @@ export default class movie_services {
  }
 
 
- static async allMovies(): Promise <{ error: boolean, message: string, data: Array<completeMovie> | null}>{
+ static async allMovies(): Promise <{ error: boolean, message: string, data: Record<string, completeMovie[]> | null}>{
     try{
-        console.log("entra")
      const allMovies  = await Movie.find();
-     console.log(allMovies)
-     return {error: false, message: "Successfully get selected movies from the database", data: allMovies};
+     let objectsOfArrays : Record<string, completeMovie[]> = {};
+     for(let i = 0; i < 8; i++){
+        if(!allMovies[20] && allMovies[0]){
+            objectsOfArrays[`${i}`] = allMovies.splice(0, allMovies.length);
+        }else if(allMovies[20] && allMovies[0]){
+            objectsOfArrays[`${i}`] = allMovies.splice(0,20);
+        }
+     }
+     return {error: false, message: "Successfully get selected movies from the database", data: objectsOfArrays};
     }catch(err){
      if(err instanceof Error){
          return {error: true, message: err.message, data: null};
