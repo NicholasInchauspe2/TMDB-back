@@ -48,11 +48,9 @@ export const getLengthOfMovies = async(req: Request, res: Response) => {
     }
 }
 
-export const getAllSelectedMovies = async(req: Request, res: Response) => {
-    const amount : number = Number(req.params.amount);
-    const page : number = Number(req.params.page);
+export const getAll = async(req: Request, res: Response) => {
     try{
-        const response : selectMoviesResponse = await movie_services.foundSelectMovies(amount, page);
+        const response : selectMoviesResponse = await movie_services.allMovies();
         if(!response.error){
             return res.status(200).json(response.data);
         }
