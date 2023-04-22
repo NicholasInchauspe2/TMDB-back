@@ -17,9 +17,7 @@ export default class movie_services {
 
     static async amountOfMovies(populate : Array<completeMovie>): Promise <{ error: boolean, message: string, length: number}>{
         try{
-            console.log("ENTRO EN EL PEPE")
          const allMovies = await Movie.find();
-         console.log("ENTRO EN EL PEPE", !allMovies[0])
          if(!allMovies[0]){
             console.log("entra aca")
             return{error: true, message: "No movies to search", length: -1}
@@ -32,7 +30,6 @@ export default class movie_services {
         }
          return {error: false, message: "Succesfully check if movies model is working", length: allMovies.length};
         }catch(err){
-            console.log("entro en el catch")
          if(err instanceof Error){
              return {error: true, message: "No movies on the database", length: 0};
          }
@@ -42,13 +39,10 @@ export default class movie_services {
 
  static async populateMovie(populate : Array<completeMovie>): Promise <{ error: boolean, message: string, length: number}>{
     try{
-        console.log(populate)
-            await Movie.insertMany(populate);
-            console.log("SE LLENO LA DATABASE");
+         const movies : Array<completeMovie> = await Movie.insertMany(populate);
             return {error: false, message: "Successfully inserted movies on the db", length: 0};
         }
         catch(err){
-                console.log("entro en el catch del populate", err)
              if(err instanceof Error){
                  return {error: true, message: "Could populate database", length: 0};
              }

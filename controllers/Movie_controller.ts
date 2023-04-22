@@ -23,6 +23,13 @@ export const getLengthOfMovies = async(req: Request, res: Response) => {
          for(let i = 0; i < newMovie.length; i ++){
             populate = populate.concat(newMovie[i]);
        }  
+       let bug : null | any = null
+       for(let i = 0; i < populate.length; i++){
+        if(!populate[i].title || !populate[i].overview  || !populate[i].vote_average || !populate[i].poster_path || !populate[i].backdrop_path){
+            bug = populate[i];
+          populate.splice(populate.indexOf(bug),1);
+        }
+       }
         const response : lengthOfMoviesResponse = await movie_services.amountOfMovies(populate);
         if(!response.error){
             return res.status(200).json(response);
@@ -36,6 +43,7 @@ export const getLengthOfMovies = async(req: Request, res: Response) => {
         }
         return res.status(400).json(response.message);
     }catch(err){
+        console.log(err)
         return res.status(400).json({message: "Failed to add a new movie"});
     }
 }
