@@ -19,13 +19,16 @@ export const addMovie = async(req: Request, res: Response) => {
 export const getLengthOfMovies = async(req: Request, res: Response) => {
     const newMovie : completeMovie[][] = req.body;
     try{
+        if(newMovie[0] === null){
+            return res.status(404).json({message: "Movies body cannot be null"})
+        }
         let populate : completeMovie[] = [];
          for(let i = 0; i < newMovie.length; i ++){
             populate = populate.concat(newMovie[i]);
        }  
        let bug : null | any = null
        for(let i = 0; i < populate.length; i++){
-        if(!populate[i].title || !populate[i].overview  || !populate[i].vote_average || !populate[i].poster_path || !populate[i].backdrop_path){
+        if(!populate[i]?.title || !populate[i]?.overview  || !populate[i]?.vote_average || !populate[i]?.poster_path || !populate[i]?.backdrop_path){
             bug = populate[i];
           populate.splice(populate.indexOf(bug),1);
         }

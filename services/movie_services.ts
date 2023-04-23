@@ -19,17 +19,18 @@ export default class movie_services {
         try{
          const allMovies = await Movie.find();
          if(!allMovies[0]){
-            console.log("entra aca")
             return{error: true, message: "No movies to search", length: -1}
          }
-         if(new Date(allMovies[0].createdAt).getDate() !== new Date().getDate()){
+         console.log(allMovies.length, new Date(allMovies[0].createdAt).getDate() !== new Date().getDate())
+         if(new Date(allMovies[0]?.createdAt).getDate() !== new Date().getDate()){
              const DeleteResult : DeleteDocumentResponse = await Movie.deleteMany();
             if(DeleteResult.deletedCount === 0){return{error: true, message:"Failed to find the movie in the database",  length: 0}};
             await Movie.insertMany(populate);
             return {error: false, message: "Successfully inserted movies on the db", length: 0};
         }
          return {error: false, message: "Succesfully check if movies model is working", length: allMovies.length};
-        }catch(err){
+        }catch(err){  
+             console.log("entra en el catch")
          if(err instanceof Error){
              return {error: true, message: "No movies on the database", length: 0};
          }
@@ -39,12 +40,16 @@ export default class movie_services {
 
  static async populateMovie(populate : Array<completeMovie>): Promise <{ error: boolean, message: string, length: number}>{
     try{
-         const movies : Array<completeMovie> = await Movie.insertMany(populate);
+        const oneMovie : completeMovie | null = await Movie.findOne();
+        if(oneMovie === null){
+            const movies : Array<completeMovie> = await Movie.insertMany(populate);
             return {error: false, message: "Successfully inserted movies on the db", length: 0};
+        }
+        return {error: false, message: "database already contains movies", length: 0};
         }
         catch(err){
              if(err instanceof Error){
-                 return {error: true, message: "Could populate database", length: 0};
+                 return {error: true, message: "Couldn't populate database", length: 0};
              }
              return{error: true, message: "Unknown Error, failed to populate database", length: 0};
             }
