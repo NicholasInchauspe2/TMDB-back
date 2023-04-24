@@ -18,7 +18,7 @@ export const addMovie = async(req: Request, res: Response) => {
 
 export const getLengthOfMovies = async(req: Request, res: Response) => {
     const newMovie : completeMovie[][] = req.body;
-    try{
+    try{     
         if(newMovie[0] === null){
             return res.status(404).json({message: "Movies body cannot be null"})
         }
@@ -28,16 +28,27 @@ export const getLengthOfMovies = async(req: Request, res: Response) => {
        }  
        let bug : null | any = null
        for(let i = 0; i < populate.length; i++){
+        if(!populate[i]?.title && populate[i]?.name){
+            populate[i]["title"] = populate[i]?.name
+        }
+        if(!populate[i]?.backdrop_path && populate[i]?.poster_path){
+            populate[i]["backdrop_path"] = populate[i]?.poster_path
+        }
+
         if(!populate[i]?.title || !populate[i]?.overview  || !populate[i]?.vote_average || !populate[i]?.poster_path || !populate[i]?.backdrop_path){
             bug = populate[i];
           populate.splice(populate.indexOf(bug),1);
         }
        }
+      
+       
         const response : lengthOfMoviesResponse = await movie_services.amountOfMovies(populate);
         if(!response.error){
             return res.status(200).json(response);
         }
         if(response.error && response.length === -1){
+            console.log("Entre en el segundo");
+            
             const responseOfPopulation : lengthOfMoviesResponse = await movie_services.populateMovie(populate)
             if(!responseOfPopulation.error){
                 return res.status(201).json({message: "Sucessfully populate movie Model"});
@@ -46,7 +57,6 @@ export const getLengthOfMovies = async(req: Request, res: Response) => {
         }
         return res.status(400).json(response.message);
     }catch(err){
-        console.log(err)
         return res.status(400).json({message: "Failed to add a new movie"});
     }
 }
