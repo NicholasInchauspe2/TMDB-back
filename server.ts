@@ -12,7 +12,11 @@ dbConnection()
 
 app.use(express.static("public"));
 
-app.use(cors());
+app.use(cors({
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST", "DELETE", "OPTIONS", "PUT"],
+    credentials: true,
+  }));
 
 app.use(express.json());
 
