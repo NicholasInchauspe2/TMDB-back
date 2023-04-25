@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 async function dbConnection() {
     try{
-        await mongoose.connect("mongodb://localhost/test", {
+        await mongoose.connect("mongodb+srv://NicolasInchauspe2:Testing@tmdb-back.syxig9b.mongodb.net/test", {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         } as any);
