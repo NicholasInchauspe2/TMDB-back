@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Api for TMDB proyect",
   "main": "server.ts",
-  "engines": { 
+  "engines": {
     "node": "14.x"
   },
   "scripts": {
@@ -32,6 +32,7 @@
     "mongoose": "^7.0.4",
     "node": "^19.8.1",
     "nodemon": "^2.0.22",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
   }
 }
