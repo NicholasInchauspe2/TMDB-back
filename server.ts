@@ -13,7 +13,7 @@ dbConnection()
 app.use(express.static("public"));
 
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: "https://tmdb-web-app.vercel.app",
     methods: ["GET", "POST", "DELETE", "OPTIONS", "PUT"],
     credentials: true,
   }));
